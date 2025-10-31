@@ -22,11 +22,19 @@ public class RobotContainer {
         // Easy switching between robots for testing, just change ROBOT_NAME parameter in Constants.java
         switch (Constants.ROBOT_NAME) {
             case MONTEREY_JACK :
-                drivetrain = new Drivetrain(new DrivetrainIOSparkMax());
+                drivetrain = new Drivetrain(new DrivetrainIOSparkMax(
+                    RobotMap.MONTY_DRIVETRAIN_FRONT_LEFT_ID,
+                    RobotMap.MONTY_DRIVETRAIN_FRONT_RIGHT_ID,
+                    RobotMap.MONTY_DRIVETRAIN_BACK_LEFT_ID,
+                    RobotMap.MONTY_DRIVETRAIN_BACK_RIGHT_ID));
                 break;
             
             case KITBOT :
-                drivetrain = new Drivetrain(new DrivetrainIOTalonSRX());
+                drivetrain = new Drivetrain(new DrivetrainIOTalonSRX(
+                    RobotMap.KITBOT_DRIVETRAIN_FRONT_LEFT_ID,
+                    RobotMap.KITBOT_DRIVETRAIN_FRONT_RIGHT_ID,
+                    RobotMap.KITBOT_DRIVETRAIN_BACK_LEFT_ID,
+                    RobotMap.KITBOT_DRIVETRAIN_BACK_RIGHT_ID));
                 break;
         }
 

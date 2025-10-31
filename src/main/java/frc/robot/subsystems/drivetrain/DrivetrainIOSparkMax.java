@@ -12,12 +12,12 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
 
     SparkMax frontLeft, frontRight, backLeft, backRight;
 
-    public DrivetrainIOSparkMax() {
+    public DrivetrainIOSparkMax(int FRONT_LEFT_ID, int FRONT_RIGHT_ID, int BACK_LEFT_ID, int BACK_RIGHT_ID) {
         // Initialize motor controllers
-        frontLeft = new SparkMax(RobotMap.MONTY_DRIVETRAIN_FRONT_LEFT_ID, MotorType.kBrushless);
-        frontRight = new SparkMax(RobotMap.MONTY_DRIVETRAIN_FRONT_RIGHT_ID, MotorType.kBrushless);
-        backLeft = new SparkMax(RobotMap.MONTY_DRIVETRAIN_BACK_LEFT_ID, MotorType.kBrushless);
-        backRight = new SparkMax(RobotMap.MONTY_DRIVETRAIN_BACK_RIGHT_ID, MotorType.kBrushless);
+        frontLeft = new SparkMax(FRONT_LEFT_ID, MotorType.kBrushless);
+        frontRight = new SparkMax(FRONT_RIGHT_ID, MotorType.kBrushless);
+        backLeft = new SparkMax(BACK_LEFT_ID, MotorType.kBrushless);
+        backRight = new SparkMax(BACK_RIGHT_ID, MotorType.kBrushless);
 
         // Configure motor controllers
         SparkMaxConfig frontLeftConfig = new SparkMaxConfig();
@@ -29,11 +29,11 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
         frontRight.configure(frontRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         SparkMaxConfig backLeftConfig = new SparkMaxConfig();
-        backLeftConfig.follow(frontLeft); // Second motor in gearbox follows first
+        backLeftConfig.follow(this.frontLeft); // Second motor in gearbox follows first
         backLeft.configure(backLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         SparkMaxConfig backRightConfig = new SparkMaxConfig();
-        backRightConfig.follow(frontRight); // Second motor in gearbox follows first
+        backRightConfig.follow(this.frontRight); // Second motor in gearbox follows first
         backRight.configure(backRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
