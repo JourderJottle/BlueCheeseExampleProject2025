@@ -1,0 +1,1 @@
+Example solution to Blue Cheese programming rookies' homework assignment
