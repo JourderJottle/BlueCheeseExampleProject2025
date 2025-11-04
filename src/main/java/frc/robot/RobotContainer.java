@@ -26,7 +26,11 @@ public class RobotContainer {
                     RobotMap.MONTY_DRIVETRAIN_FRONT_LEFT_ID,
                     RobotMap.MONTY_DRIVETRAIN_FRONT_RIGHT_ID,
                     RobotMap.MONTY_DRIVETRAIN_BACK_LEFT_ID,
-                    RobotMap.MONTY_DRIVETRAIN_BACK_RIGHT_ID));
+                    RobotMap.MONTY_DRIVETRAIN_BACK_RIGHT_ID,
+                    Constants.MONTEREY_JACK_DRIVE_KP,
+                    Constants.MONTEREY_JACK_DRIVE_KI,
+                    Constants.MONTEREY_JACK_DRIVE_KD,
+                    Constants.MONTEREY_JACK_DRIVE_KFF));
                 break;
             
             case KITBOT :
