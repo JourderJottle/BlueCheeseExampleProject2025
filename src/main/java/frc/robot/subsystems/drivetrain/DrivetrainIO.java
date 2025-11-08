@@ -10,9 +10,9 @@ public abstract class DrivetrainIO {
     public abstract void setPercentOutputs(double left, double right);
 
     /**
-     * Sets speeds of left and right sides of differential drive in m/s
-     * @param left
-     * @param right
+     * Sets linear and angular drivetrain speeds in m/s and radians/s, respectively
+     * @param linear
+     * @param angular
      */
-    public abstract void setVelocity(double left, double right);
+    public abstract void setVelocity(double linear, double angular);
 }

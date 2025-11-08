@@ -17,6 +17,10 @@ public class Drivetrain extends SubsystemBase {
         return this.run(() -> this.drivetrain.setPercentOutputs(forward.get() + turn.get(), forward.get() - turn.get()));
     }
 
+    public Command velocityArcadeDriveCommand(Supplier<Double> forward, Supplier<Double> turn) {
+        return this.run(() -> this.drivetrain.setVelocity(forward.get(), turn.get()));
+    }
+
     @Override
     public void periodic() {
 

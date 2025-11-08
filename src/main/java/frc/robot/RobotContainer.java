@@ -30,7 +30,9 @@ public class RobotContainer {
                     Constants.MONTEREY_JACK_DRIVE_KP,
                     Constants.MONTEREY_JACK_DRIVE_KI,
                     Constants.MONTEREY_JACK_DRIVE_KD,
-                    Constants.MONTEREY_JACK_DRIVE_KFF));
+                    Constants.MONTEREY_JACK_DRIVE_KFF,
+                    Constants.MONTEREY_JACK_METERS_PER_SECOND_TO_ROTATIONS_PER_MINUTE,
+                    Constants.MONTEREY_JACK_TRACK_WIDTH));
                 break;
             
             case KITBOT :
@@ -49,10 +51,22 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        // Sets drivetrain default command (command the Drivetrain subsystem will run when no other commands are scheduled for it) to percent output arcade drive
-        drivetrain.setDefaultCommand(drivetrain.percentOutputArcadeDriveCommand(
-            () -> modulateDriveInput(-controller.getLeftY()),
-            () -> modulateDriveInput(controller.getRightX())));
+        if (Constants.USE_VELOCITY_DRIVE) {
+            switch (Constants.ROBOT_NAME) {
+                case MONTEREY_JACK :
+                    drivetrain.setDefaultCommand(drivetrain.velocityArcadeDriveCommand(
+                        () -> modulateDriveInput(-controller.getLeftY()) * Constants.MONTEREY_JACK_MAX_LINEAR_SPEED,
+                        () -> modulateDriveInput(controller.getRightX()) * Constants.MONTEREY_JACK_MAX_ANGULAR_SPEED));
+                    break;
+                default :
+                    break;
+            }
+        } else {
+            // Sets drivetrain default command (command the Drivetrain subsystem will run when no other commands are scheduled for it) to percent output arcade drive
+            drivetrain.setDefaultCommand(drivetrain.percentOutputArcadeDriveCommand(
+                () -> modulateDriveInput(-controller.getLeftY()),
+                () -> modulateDriveInput(controller.getRightX())));
+        }
 
     }
 

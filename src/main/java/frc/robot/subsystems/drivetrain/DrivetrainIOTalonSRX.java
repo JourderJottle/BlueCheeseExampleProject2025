@@ -26,7 +26,7 @@ public class DrivetrainIOTalonSRX extends DrivetrainIO {
     }
 
     @Override
-    public void setVelocity(double left, double right) {
+    public void setVelocity(double linear, double angular) {
         throw new UnsupportedOperationException("Kitbot does not support velocity PID drive");
     }
 
