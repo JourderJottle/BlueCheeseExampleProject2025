@@ -13,7 +13,7 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
     SparkMax frontLeft, frontRight, backLeft, backRight;
     double metersPerSecondToRotationsPerMinuteMultiplier;
 
-    public DrivetrainIOSparkMax(int FRONT_LEFT_ID, int FRONT_RIGHT_ID, int BACK_LEFT_ID, int BACK_RIGHT_ID, double MONTEREY_JACK_DRIVE_KP, double MONTEREY_JACK_DRIVE_KI, double MONTEREY_JACK_DRIVE_KD, double MONTEREY_JACK_DRIVE_KFF, double metersPerSecondToRotationsPerMinuteMultiplier) {
+    public DrivetrainIOSparkMax(int FRONT_LEFT_ID, int FRONT_RIGHT_ID, int BACK_LEFT_ID, int BACK_RIGHT_ID, double DRIVE_KP, double DRIVE_KI, double DRIVE_KD, double DRIVE_KFF, double metersPerSecondToRotationsPerMinuteMultiplier) {
         // Initialize motor controllers
         this.frontLeft = new SparkMax(FRONT_LEFT_ID, MotorType.kBrushless);
         this.frontRight = new SparkMax(FRONT_RIGHT_ID, MotorType.kBrushless);
@@ -23,12 +23,12 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
         // Configure motor controllers
         SparkMaxConfig frontLeftConfig = new SparkMaxConfig();
         frontLeftConfig.inverted(false);
-        frontLeftConfig.closedLoop.pidf(MONTEREY_JACK_DRIVE_KP, MONTEREY_JACK_DRIVE_KI, MONTEREY_JACK_DRIVE_KD, MONTEREY_JACK_DRIVE_KFF);
+        frontLeftConfig.closedLoop.pidf(DRIVE_KP, DRIVE_KI, DRIVE_KD, DRIVE_KFF);
         this.frontLeft.configure(frontLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         SparkMaxConfig frontRightConfig = new SparkMaxConfig();
         frontRightConfig.inverted(true); // Right side is inverted because motors are positioned backwards on right side of differential drives
-        frontRightConfig.closedLoop.pidf(MONTEREY_JACK_DRIVE_KP, MONTEREY_JACK_DRIVE_KI, MONTEREY_JACK_DRIVE_KD, MONTEREY_JACK_DRIVE_KFF);
+        frontRightConfig.closedLoop.pidf(DRIVE_KP, DRIVE_KI, DRIVE_KD, DRIVE_KFF);
         this.frontRight.configure(frontRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         SparkMaxConfig backLeftConfig = new SparkMaxConfig();
@@ -52,6 +52,10 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
     public void setVelocities(double left, double right) {
         this.frontLeft.getClosedLoopController().setReference(left * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
         this.frontRight.getClosedLoopController().setReference(right * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
+    }
+
+    @Override
+    public void periodic() {
     }
     
 }

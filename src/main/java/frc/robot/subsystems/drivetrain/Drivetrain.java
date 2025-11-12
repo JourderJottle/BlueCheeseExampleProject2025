@@ -10,26 +10,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-    DrivetrainIO drivetrain;
+    DrivetrainIO io;
     DifferentialDriveKinematics kinematics;
 
-    public Drivetrain(DrivetrainIO drivetrain, double wheelBase) {
-        this.drivetrain = drivetrain;
+    public Drivetrain(DrivetrainIO io, double wheelBase) {
+        this.io = io;
         this.kinematics = new DifferentialDriveKinematics(wheelBase);
     }
 
     public Command percentOutputArcadeDriveCommand(Supplier<Double> forward, Supplier<Double> turn) {
-        return this.run(() -> this.drivetrain.setPercentOutputs(forward.get() + turn.get(), forward.get() - turn.get()));
+        return this.run(() -> this.io.setPercentOutputs(forward.get() + turn.get(), forward.get() - turn.get()));
     }
 
     public Command velocityArcadeDriveCommand(Supplier<Double> forward, Supplier<Double> turn) {
         ChassisSpeeds speeds = new ChassisSpeeds(forward.get(), 0, turn.get());
         DifferentialDriveWheelSpeeds wheelSpeeds = this.kinematics.toWheelSpeeds(speeds);
-        return this.run(() -> this.drivetrain.setVelocities(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond));
+        return this.run(() -> this.io.setVelocities(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond));
     }
 
     @Override
     public void periodic() {
-
+        this.io.periodic();
     }
 }

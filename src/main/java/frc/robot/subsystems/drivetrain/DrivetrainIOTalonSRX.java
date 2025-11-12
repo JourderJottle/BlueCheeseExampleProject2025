@@ -26,8 +26,13 @@ public class DrivetrainIOTalonSRX extends DrivetrainIO {
     }
 
     @Override
-    public void setVelocities(double linear, double angular) {
-        throw new UnsupportedOperationException("Kitbot does not support velocity PID drive");
+    public void setVelocities(double left, double right) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setVelocities'");
+    }
+
+    @Override
+    public void periodic() {
     }
 
 }

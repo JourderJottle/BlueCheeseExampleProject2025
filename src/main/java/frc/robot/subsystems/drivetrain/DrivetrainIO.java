@@ -15,4 +15,9 @@ public abstract class DrivetrainIO {
      * @param right
      */
     public abstract void setVelocities(double left, double right);
+
+    /**
+     * Called every tick by Drivetrain subsystem
+     */
+    public abstract void periodic();
 }
