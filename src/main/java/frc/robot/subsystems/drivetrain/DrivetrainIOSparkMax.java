@@ -6,19 +6,14 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class DrivetrainIOSparkMax extends DrivetrainIO {
 
     SparkMax frontLeft, frontRight, backLeft, backRight;
     double metersPerSecondToRotationsPerMinuteMultiplier;
-    DifferentialDriveKinematics kinematics;
 
-    public DrivetrainIOSparkMax(int FRONT_LEFT_ID, int FRONT_RIGHT_ID, int BACK_LEFT_ID, int BACK_RIGHT_ID, double MONTEREY_JACK_DRIVE_KP, double MONTEREY_JACK_DRIVE_KI, double MONTEREY_JACK_DRIVE_KD, double MONTEREY_JACK_DRIVE_KFF, double metersPerSecondToRotationsPerMinuteMultiplier, double trackWidth) {
+    public DrivetrainIOSparkMax(int FRONT_LEFT_ID, int FRONT_RIGHT_ID, int BACK_LEFT_ID, int BACK_RIGHT_ID, double MONTEREY_JACK_DRIVE_KP, double MONTEREY_JACK_DRIVE_KI, double MONTEREY_JACK_DRIVE_KD, double MONTEREY_JACK_DRIVE_KFF, double metersPerSecondToRotationsPerMinuteMultiplier) {
         // Initialize motor controllers
         this.frontLeft = new SparkMax(FRONT_LEFT_ID, MotorType.kBrushless);
         this.frontRight = new SparkMax(FRONT_RIGHT_ID, MotorType.kBrushless);
@@ -45,8 +40,6 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
         this.backRight.configure(backRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         this.metersPerSecondToRotationsPerMinuteMultiplier = metersPerSecondToRotationsPerMinuteMultiplier;
-
-        this.kinematics = new DifferentialDriveKinematics(trackWidth);
     }
 
     @Override
@@ -56,11 +49,9 @@ public class DrivetrainIOSparkMax extends DrivetrainIO {
     }
 
     @Override
-    public void setVelocity(double linear, double angular) {
-        ChassisSpeeds speeds = new ChassisSpeeds(linear, 0, angular);
-        DifferentialDriveWheelSpeeds wheelSpeeds = this.kinematics.toWheelSpeeds(speeds);
-        this.frontLeft.getClosedLoopController().setReference(wheelSpeeds.leftMetersPerSecond * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
-        this.frontRight.getClosedLoopController().setReference(wheelSpeeds.rightMetersPerSecond * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
+    public void setVelocities(double left, double right) {
+        this.frontLeft.getClosedLoopController().setReference(left * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
+        this.frontRight.getClosedLoopController().setReference(right * this.metersPerSecondToRotationsPerMinuteMultiplier, ControlType.kVelocity);
     }
     
 }

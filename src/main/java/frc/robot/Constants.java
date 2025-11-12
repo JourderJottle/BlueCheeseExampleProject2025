@@ -6,6 +6,8 @@ public class Constants {
 
     public static final double DRIVE_DEADBAND = 0.1; // Minimum joystick magnitude before robot will move
 
+    public static final boolean USE_VELOCITY_DRIVE = false;
+
     // Monterey Jack Constants
     public static final double MONTEREY_JACK_GEAR_RATIO = 1 / 8.98;
     public static final double MONTEREY_JACK_TRACK_WIDTH = 0;
@@ -19,7 +21,8 @@ public class Constants {
     public static final double MONTEREY_JACK_DRIVE_KI = 0;
     public static final double MONTEREY_JACK_DRIVE_KD = 0;
 
-    public static final boolean USE_VELOCITY_DRIVE = false;
+    // Kitbot Constants
+    public static final double KITBOT_WHEEL_BASE = 0;    
 
 }
 

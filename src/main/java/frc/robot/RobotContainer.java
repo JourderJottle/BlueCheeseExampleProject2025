@@ -31,8 +31,9 @@ public class RobotContainer {
                     Constants.MONTEREY_JACK_DRIVE_KI,
                     Constants.MONTEREY_JACK_DRIVE_KD,
                     Constants.MONTEREY_JACK_DRIVE_KFF,
-                    Constants.MONTEREY_JACK_METERS_PER_SECOND_TO_ROTATIONS_PER_MINUTE,
-                    Constants.MONTEREY_JACK_TRACK_WIDTH));
+                    Constants.MONTEREY_JACK_METERS_PER_SECOND_TO_ROTATIONS_PER_MINUTE
+                    ),
+                    Constants.MONTEREY_JACK_TRACK_WIDTH);
                 break;
             
             case KITBOT :
@@ -40,7 +41,8 @@ public class RobotContainer {
                     RobotMap.KITBOT_DRIVETRAIN_FRONT_LEFT_ID,
                     RobotMap.KITBOT_DRIVETRAIN_FRONT_RIGHT_ID,
                     RobotMap.KITBOT_DRIVETRAIN_BACK_LEFT_ID,
-                    RobotMap.KITBOT_DRIVETRAIN_BACK_RIGHT_ID));
+                    RobotMap.KITBOT_DRIVETRAIN_BACK_RIGHT_ID),
+                    Constants.KITBOT_WHEEL_BASE);
                 break;
         }
 

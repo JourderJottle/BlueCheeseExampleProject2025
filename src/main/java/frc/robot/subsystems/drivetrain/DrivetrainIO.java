@@ -10,9 +10,9 @@ public abstract class DrivetrainIO {
     public abstract void setPercentOutputs(double left, double right);
 
     /**
-     * Sets linear and angular drivetrain speeds in m/s and radians/s, respectively
-     * @param linear
-     * @param angular
+     * Sets the left and right wheel speeds in m/s
+     * @param left
+     * @param right
      */
-    public abstract void setVelocity(double linear, double angular);
+    public abstract void setVelocities(double left, double right);
 }
