@@ -57,13 +57,12 @@ public class ModuleIOTalonFX extends ModuleIO {
 
     @Override
     public void setOrientation(double orientation) {
-        this.drive.setControl(new PositionVoltage((orientation + this.zero) / this.steerRadiansPerRotation));
+        this.steer.setControl(new PositionVoltage((orientation + this.zero) / this.steerRadiansPerRotation));
     }
 
     @Override
     public void setOrientationOffset(double offset) {
         this.zero = offset;
     }
-
 
 }

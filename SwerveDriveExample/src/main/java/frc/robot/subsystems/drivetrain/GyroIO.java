@@ -6,6 +6,6 @@ public abstract class GyroIO {
 
     public abstract Rotation2d getOrientation();
 
-    public abstract void resetOrientation(double orientation);
+    public abstract void resetOrientation(Rotation2d orientation);
     
 }
