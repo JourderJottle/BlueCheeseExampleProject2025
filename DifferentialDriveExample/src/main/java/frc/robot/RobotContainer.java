@@ -4,12 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.DrivetrainIOSparkMax;
-import frc.robot.subsystems.drivetrain.DrivetrainIOTalonSRX;
+import frc.robot.subsystems.drivetrain.*;
 
 public class RobotContainer {
 
@@ -33,7 +33,7 @@ public class RobotContainer {
                     Constants.MONTEREY_JACK_DRIVE_KFF,
                     Constants.MONTEREY_JACK_METERS_PER_SECOND_TO_ROTATIONS_PER_MINUTE
                     ),
-                    Constants.MONTEREY_JACK_TRACK_WIDTH);
+                    Constants.MONTEREY_JACK_WHEEL_BASE);
                 break;
             
             case KITBOT :
@@ -44,6 +44,20 @@ public class RobotContainer {
                     RobotMap.KITBOT_DRIVETRAIN_BACK_RIGHT_ID),
                     Constants.KITBOT_WHEEL_BASE);
                 break;
+
+            case SIM :
+                drivetrain = new Drivetrain(new DrivetrainIOSim(new DifferentialDrivetrainSim(
+                    DCMotor.getNEO(2),
+                    1 / Constants.SIM_GEAR_RATIO,
+                    Constants.SIM_ROBOT_MOI, 
+                    Constants.SIM_ROBOT_MASS, 
+                    Constants.SIM_WHEEL_BASE, 
+                    Constants.SIM_WHEEL_RADIUS, null),
+                    Constants.SIM_DRIVE_KP,
+                    Constants.SIM_DRIVE_KI,
+                    Constants.SIM_DRIVE_KD,
+                    Constants.SIM_DRIVE_KFF),
+                    Constants.SIM_WHEEL_BASE);
         }
 
         controller = new CommandXboxController(RobotMap.CONTROLLER_PORT);
@@ -60,6 +74,11 @@ public class RobotContainer {
                         () -> modulateDriveInput(-controller.getLeftY()) * Constants.MONTEREY_JACK_MAX_LINEAR_SPEED,
                         () -> modulateDriveInput(controller.getRightX()) * Constants.MONTEREY_JACK_MAX_ANGULAR_SPEED));
                     break;
+
+                case SIM :
+                    drivetrain.setDefaultCommand(drivetrain.velocityArcadeDriveCommand(
+                        () -> modulateDriveInput(-controller.getLeftY()) * Constants.SIM_MAX_LINEAR_SPEED,
+                        () -> modulateDriveInput(controller.getRightX()) * Constants.SIM_MAX_ANGULAR_SPEED));
                 default :
                     break;
             }
