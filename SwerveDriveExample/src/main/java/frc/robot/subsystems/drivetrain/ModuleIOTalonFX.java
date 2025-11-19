@@ -7,6 +7,8 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public class ModuleIOTalonFX extends ModuleIO {
 
     TalonFX drive, steer;
@@ -46,8 +48,8 @@ public class ModuleIOTalonFX extends ModuleIO {
     }
 
     @Override
-    public double getOrientation() {
-        return (this.steer.getPosition().getValueAsDouble() - this.zero) * this.steerRadiansPerRotation;
+    public Rotation2d getOrientation() {
+        return Rotation2d.fromRadians((this.steer.getPosition().getValueAsDouble() - this.zero) * this.steerRadiansPerRotation);
     }
 
     @Override
@@ -56,8 +58,8 @@ public class ModuleIOTalonFX extends ModuleIO {
     }
 
     @Override
-    public void setOrientation(double orientation) {
-        this.steer.setControl(new PositionVoltage((orientation + this.zero) / this.steerRadiansPerRotation));
+    public void setOrientation(Rotation2d orientation) {
+        this.steer.setControl(new PositionVoltage((orientation.getRadians() + this.zero) / this.steerRadiansPerRotation));
     }
 
     @Override

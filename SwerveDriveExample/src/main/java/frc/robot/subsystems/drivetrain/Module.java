@@ -11,7 +11,8 @@ public class Module {
     }
 
     public void setState(SwerveModuleState state) {
+        state.optimize(this.io.getOrientation());
         this.io.setSpeed(state.speedMetersPerSecond);
-        this.io.setOrientation(state.angle.getRadians());
+        this.io.setOrientation(state.angle);
     }
 }
