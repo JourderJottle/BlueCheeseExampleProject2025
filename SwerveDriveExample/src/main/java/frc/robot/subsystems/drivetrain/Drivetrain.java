@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-    ModuleIO frontLeft, frontRight, backLeft, backRight;
+    Module[] modules;
     GyroIO gyro;
     SwerveDriveKinematics kinematics;
 
@@ -22,10 +22,7 @@ public class Drivetrain extends SubsystemBase {
         ModuleIO backRight, Translation2d backRightOffset, 
         GyroIO gyro) {
 
-        this.frontLeft = frontLeft;
-        this.frontRight = frontRight;
-        this.backLeft = backLeft;
-        this.backRight = backRight;
+        this.modules = new Module[] {new Module(frontLeft), new Module(frontRight), new Module(backLeft), new Module(backRight)};
         this.gyro = gyro;
 
         this.kinematics = new SwerveDriveKinematics(frontLeftOffset, frontRightOffset, backLeftOffset, backRightOffset);
@@ -35,17 +32,10 @@ public class Drivetrain extends SubsystemBase {
         ChassisSpeeds robotRelativeSpeeds = new ChassisSpeeds(vx.get(), vy.get(), vTheta.get());
         ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(robotRelativeSpeeds, this.gyro.getOrientation());
         SwerveModuleState[] states = this.kinematics.toSwerveModuleStates(fieldRelativeSpeeds);
-        return this.run(() -> this.setSwerveModuleStates(states));
-    }
-
-    public void setSwerveModuleStates(SwerveModuleState[] states) {
-        this.frontLeft.setSpeed(states[0].speedMetersPerSecond);
-        this.frontLeft.setOrientation((states[0].angle.getRadians()));
-        this.frontRight.setSpeed(states[1].speedMetersPerSecond);
-        this.frontRight.setOrientation((states[1].angle.getRadians()));
-        this.backLeft.setSpeed(states[2].speedMetersPerSecond);
-        this.backLeft.setOrientation((states[2].angle.getRadians()));
-        this.backRight.setSpeed(states[3].speedMetersPerSecond);
-        this.backRight.setOrientation((states[3].angle.getRadians()));
+        return this.run(() -> {
+            for (int i = 0; i < 4; i++) {
+                this.modules[i].setState(states[i]);
+            }
+        });
     }
 }
